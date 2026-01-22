@@ -1,20 +1,34 @@
 <template>
-   <!-- Board Container -->
-   <div class="bg-white ">
+  <div class="bg-white space-y-2">
 
-      <!-- Game Grid: dynamic rows x cols -->
-      <div 
-         class="grid gap-2" 
-         :style="{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }"
-      >
-
-         <!-- UNE SEULE CELLULE - Exemple à répéter avec v-for -->
-         <Cell v-for="a in totalCells" :key="a" :col="Math.floor((a - 1) % cols)" :row="Math.floor((a - 1) / cols)" :boardValue="board[Math.floor((a - 1)/cols)][Math.floor((a - 1) % cols)]" @cell-clicked="fillColumn" />
-         <!-- Répéter avec v-for pour toutes les cellules -->
-
+    <!-- Numéros des colonnes -->
+    <div
+      class="grid text-center font-bold text-gray-700"
+      :style="{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }"
+    >
+      <div v-for="col in cols" :key="col">
+        {{ col }}
       </div>
-   </div>
+    </div>
+
+    <!-- Game Grid -->
+    <div
+      class="grid gap-2"
+      :style="{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }"
+    >
+      <Cell
+        v-for="a in totalCells"
+        :key="a"
+        :col="(a - 1) % cols"
+        :row="Math.floor((a - 1) / cols)"
+        :boardValue="board[Math.floor((a - 1) / cols)][(a - 1) % cols]"
+        @cell-clicked="fillColumn"
+      />
+    </div>
+
+  </div>
 </template>
+
 
 <script setup>
 import { computed } from 'vue';
